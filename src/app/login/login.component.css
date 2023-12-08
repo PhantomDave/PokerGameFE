@@ -1,0 +1,8 @@
+.bg-blur {
+  backdrop-filter: blur(10px);
+}
+
+.form-login  {
+  padding: 2%;
+  opacity: 80%;
+}
