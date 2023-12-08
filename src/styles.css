@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+.poker-primary {
+  background-color: rgba(71, 113, 72, 0.81);
+  opacity: 90%;
+}
+
+body {
+  background-image: url("https://img.freepik.com/premium-vector/poker-table-background-green-color_47243-1094.jpg?w=1380");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
