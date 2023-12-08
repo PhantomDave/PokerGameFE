@@ -5,4 +5,5 @@ export interface IProfile {
   ChipsWon: number;
   PlayerKnockedOut: number;
   LoggedIn: boolean;
+  Token: string;
 }

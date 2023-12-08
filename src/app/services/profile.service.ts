@@ -14,12 +14,21 @@ export class ProfileService implements OnInit {
     Name: '',
     Email: '',
     LoggedIn: false,
+    Token: '',
   };
 
   ngOnInit() {
     if (localStorage.getItem('token') != undefined) {
-      this.profile.LoggedIn = true;
+      this.profile = this.loadProfile();
     }
+  }
+
+  loadProfile():IProfile {
+    return JSON.parse(localStorage.getItem('profile') || "");
+  }
+
+  updateLocalStorage() {
+    localStorage.setItem('profile', JSON.stringify(this.profile));
   }
 
   setName(name: string) {

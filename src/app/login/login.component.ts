@@ -29,10 +29,11 @@ export class LoginComponent {
       next: (nonce: string) => {
         this.gameApi.loginUser(this.email, nonce + password).subscribe({
           next: (profile) => {
-            localStorage.setItem('token', profile.dtoken);
+
             this.profileService.setName(profile.duser);
             this.profileService.setEmail(profile.demail);
             this.profileService.profile.LoggedIn = true;
+            this.profileService.updateLocalStorage();
             this.router.navigateByUrl('/game');
           },
           error: (err) => console.error(err),
