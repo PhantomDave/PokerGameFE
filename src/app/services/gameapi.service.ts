@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {APIService} from "./api.service";
 import {environment} from "../../environments/environment.development";
 import {Observable} from "rxjs";
-import {IProfile} from "../iprofile";
+import {IProfile} from "../interface/iprofile";
+import {ILogin} from "../interface/ilogin";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class GameApiService {
       return this.api.get(this.gameEndpoint+'/login/'+email);
   }
 
-  loginUser(email: string, noncedPassword: string): Observable<IProfile>
+  loginUser(email: string, noncedPassword: string): Observable<ILogin>
   {
     /* Here I would hash the password + nonce to be sent back to the backend and be the most secure version of this
     However I found out by Mr. Grassia telling me and testing on my own, that the BCrypt library is too old and uses

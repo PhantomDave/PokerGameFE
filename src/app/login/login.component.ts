@@ -1,33 +1,46 @@
 import { Component } from '@angular/core';
-import {FormsModule, NgForm} from "@angular/forms";
-import {GameApiService} from "../serivecs/gameapi.service";
-import {take} from "rxjs";
-import {IProfile} from "../iprofile";
-
+import { FormsModule, NgForm } from '@angular/forms';
+import { GameApiService } from '../services/gameapi.service';
+import { CryptoService } from '../services/crypto.service';
+import { ProfileService } from '../services/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    FormsModule
-  ],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email: string ="";
-  password: string = "";
+  email: string = '';
+  password: string = '';
 
-  constructor(private gameApi: GameApiService) {
-  }
+  constructor(
+    private gameApi: GameApiService,
+    private hashService: CryptoService,
+    private profileService: ProfileService,
+    private router: Router,
+  ) {}
   async onSubmit(loginForm: NgForm) {
+    const password = await this.hashService.hashString(this.password);
+
     this.gameApi.getUserNonce(this.email).subscribe({
       next: (nonce: string) => {
-        this.gameApi.loginUser(this.email, shajs('sha256').update({this.password}).digest('hex') + nonce).subscribe(
-          {next: (profile) => console.table(profile), error: (err) => console.error(err), complete:() => console.log("Auth done")})
+        this.gameApi.loginUser(this.email, nonce + password).subscribe({
+          next: (profile) => {
+            localStorage.setItem('token', profile.dtoken);
+            this.profileService.setName(profile.duser);
+            this.profileService.setEmail(profile.demail);
+            this.profileService.profile.LoggedIn = true;
+            this.router.navigateByUrl('/game');
+          },
+          error: (err) => console.error(err),
+          complete: () => console.log('Auth done'),
+        });
       },
-      error:(err) => console.log("ERRORE " + err),
-      complete:() => console.log("Auth Completed"),
+      error: (err) => console.log("ERRORE NELL'AUTENTICAZIONE " + err),
+      complete: () => console.log('Auth Completed'),
     });
   }
 }
