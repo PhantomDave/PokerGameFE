@@ -8,3 +8,16 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.bg-blur {
+  backdrop-filter: blur(10px);
+}
+
+
+.center-form {
+  padding: 3%;
+  opacity: 80%;
+  border-color: darkgray;
+  border-radius: 2rem;
+  border-style: solid;
+}

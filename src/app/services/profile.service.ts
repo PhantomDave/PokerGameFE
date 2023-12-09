@@ -23,8 +23,13 @@ export class ProfileService implements OnInit {
     }
   }
 
-  loadProfile():IProfile {
-    return JSON.parse(localStorage.getItem('profile') || "");
+  setToken(dtoken: string) {
+    this.profile.Token = dtoken;
+    localStorage.setItem('token', dtoken);
+  }
+
+  loadProfile(): IProfile {
+    return JSON.parse(localStorage.getItem('profile') || '');
   }
 
   updateLocalStorage() {
@@ -33,6 +38,10 @@ export class ProfileService implements OnInit {
 
   setName(name: string) {
     this.profile.Name = name;
+  }
+
+  checkUserToken(): string | null {
+    return localStorage.getItem('token');
   }
 
   setEmail(email: string) {

@@ -14,7 +14,7 @@ import {NgIf} from "@angular/common";
 })
 export class NavbarComponent implements OnInit{
   profile: IProfile = {
-    Chips: 0, ChipsWon: 0, Email: "", LoggedIn: false, Name: "", PlayerKnockedOut: 0
+    Chips: 0, ChipsWon: 0, Email: "", LoggedIn: false, Name: "", PlayerKnockedOut: 0, Token: ""
   };
 
   constructor(private profileService: ProfileService) {

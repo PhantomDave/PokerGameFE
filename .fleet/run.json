@@ -2,9 +2,9 @@
   "configurations": [
     {
       "type": "npm",
-      "name": "npm configuration",
+      "name": "NG Serve",
       "command": "run",
-      "scripts": "ng serve",
+      "scripts": "start",
     },
     
   ]

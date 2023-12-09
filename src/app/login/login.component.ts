@@ -22,6 +22,7 @@ export class LoginComponent {
     private profileService: ProfileService,
     private router: Router,
   ) {}
+
   async onSubmit(loginForm: NgForm) {
     const password = await this.hashService.hashString(this.password);
 
@@ -29,12 +30,13 @@ export class LoginComponent {
       next: (nonce: string) => {
         this.gameApi.loginUser(this.email, nonce + password).subscribe({
           next: (profile) => {
-
+            console.table(profile);
             this.profileService.setName(profile.duser);
             this.profileService.setEmail(profile.demail);
+            this.profileService.setToken(profile.dtoken);
             this.profileService.profile.LoggedIn = true;
             this.profileService.updateLocalStorage();
-            this.router.navigateByUrl('/game');
+            this.router.navigateByUrl('/game/setup');
           },
           error: (err) => console.error(err),
           complete: () => console.log('Auth done'),

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="d-flex flex-column min-vh-100 min-vw-100 bg-blur">
+    <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+      <form #setupForm="ngForm" class="poker-primary center-form" (submit)="onSubmit(setupForm)">
+        <div class="mb-3">
+          <label for="inputPlayers" class="form-label">Number of Players</label>
+          <input [(ngModel)]="players" name="players" type="number" min="1" max="5" class="form-control"
+                 ngModel
+                 id="inputPlayers"
+                 aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="smallblind" class="form-label">Small Blind</label>
+          <input [(ngModel)]="smallblind" name="smallblind" type="number" min="10" max="1000" class="form-control"
+                 ngModel
+                 id="smallblind">
+        </div>
+        <div class="mb-3">
+          <label for="bigblind" class="form-label">Big Blind</label>
+          <input [(ngModel)]="bigblind" name="bigblind" type="number" min="100" max="5000" class="form-control"
+                 ngModel
+                 id="bigblind">
+        </div>
+        <div class="mb-3">
+          <label for="chips" class="form-label">Chips</label>
+          <input [(ngModel)]="chips" name="chips" type="number" min="0" class="form-control"
+                 ngModel
+                 id="chips">
+        </div>
+        <button type="submit" class="btn btn-light">Start</button>
+      </form>
+    </div>
+  </div>
+
+</div>
