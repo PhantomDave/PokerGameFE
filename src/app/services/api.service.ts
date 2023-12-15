@@ -50,12 +50,12 @@ export class APIService {
     if (!options) {
       options = {};
     }
+
     if (!options?.params) {
       options.params = {};
     }
 
-    if(withCredentials)
-      options.url.params.set("token", localStorage.getItem("token"))
+    withCredentials = false;
 
     let header = new HttpHeaders();
     header = header.set('Content-Type', 'application/json');
@@ -64,7 +64,6 @@ export class APIService {
     options.body = body;
 
     options.observe = 'body';
-
     return this.http.request<T>(method, url, options).pipe(
       catchError((err) => {
         if (err.status === 401) {

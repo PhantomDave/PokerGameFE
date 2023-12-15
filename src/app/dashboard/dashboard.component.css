@@ -1,0 +1,14 @@
+.btnplay {
+    background-color: green;
+}
+
+.btnleader {
+    background-color: darkolivegreen;
+}
+
+.btn {
+    border: 2px;
+    border-style: solid;
+    border-radius: 1rem;
+    border-color: grey !important
+}

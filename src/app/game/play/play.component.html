@@ -1,1 +1,68 @@
-<p>play works!</p>
+<div class="container-fluid">
+    <div class="bottom-player">
+        <div class="player p0 text-light">
+            <div class="player-text">
+                <p>Username: {{game.Player.Name}}</p>
+                <p>Chips: {{game.Player.Chips}}</p>
+            </div>
+            <div class="player-cards">
+                @for (card of game.Player.Hand; track $index) {
+                <img class="card" [src]="getCardSrc(card)">
+                }
+            </div>
+        </div>
+    </div>
+    <div class="situp">
+        <button class="button situpbtn" (click)="sitUp()">SITUP</button>
+    </div>
+    <div class="player p-moves">
+        <div class="buttons">
+            <button class="button checkbtn" (click)="move(1)" [disabled]="!isPlayerTurn()">{{CanPlayerCheck()}}</button>
+            <button class="button foldbtn" (click)="move(3)" [disabled]="!isPlayerTurn()">Fold</button>
+            <button class="button raisebtn" (click)="move(2, raiseAmount)" [disabled]="!isPlayerTurn()">Raise</button>
+        </div>
+        <div class="gameInfo">
+            <span>Pot: {{game.Pot}}</span><br>
+            <span>Stage: {{getGameStage(game.CurrentStage)}}</span><br>
+            <span>Blinds {{game.Blinds}}</span><br>
+            <label for="customRange2" class="form-label">Raise Amount {{raiseAmount}}</label>
+            <input type="range" [disabled]="!isPlayerTurn" class="form-range" [min]="getMinRaise(game.Pot)"
+                [(ngModel)]="raiseAmount" [max]="game.Player.Chips" id="customRange2">
+        </div>
+    </div>
+    <div class="top-player">
+        <div *ngFor="let p of game.Opponents; index as i;">
+            <div class="playerAI">
+                <div class="player-text">
+                    <span>Username: {{game.Opponents[i].Name}}</span><br>
+                    <span>Chips: {{game.Opponents[i].Chips}}</span><br>
+                    <span *ngIf="getMove(i) != 0">Move: {{getAiMoveName(game.Opponents[i].Move)}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-cards">
+        <div class="tablecard">
+            @for(card of game.TableCards; track card) {
+
+            <img class="card" [src]="getCardSrc(card)">
+
+            }
+        </div>
+
+        @if(currentMessage != null) {
+        <div [ngClass]="currentMessage.classes">
+            {{currentMessage.message}}
+            <hr>
+            <div class="popupButtons">
+                <button *ngIf="currentMessage.buttonOk != undefined" (click)="clickResponse(true)"
+                    [ngClass]="currentMessage.buttonOkClasses">{{currentMessage.buttonOk}}</button>
+                <button *ngIf="currentMessage.buttonNotOk != undefined" (click)="clickResponse(false)"
+                    [ngClass]="currentMessage.buttonNotOkClasses">{{currentMessage.buttonNotOk}}</button>
+                <button *ngIf="currentMessage.clearBtnOk != undefined" (click)="clearPopup()"
+                    [ngClass]="currentMessage.buttonClearClasses">{{currentMessage.clearTxt}}</button>
+            </div>
+        </div>
+        }
+    </div>
+</div>

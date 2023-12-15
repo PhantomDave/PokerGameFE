@@ -1,0 +1,126 @@
+.player {
+    background-color: rgba(0, 0, 0, 0.505);
+    width: 20rem;
+    height: 9rem;
+    display: flex;
+    justify-content: left;
+    padding: 0.5rem;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.505);
+    border-radius: 1rem;
+}
+
+.playerAI {
+    background-color: rgba(0, 0, 0, 0.505);
+    width: 10rem;
+    height: 8rem;
+    font-size: small;
+}
+
+.bottom-player {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+}
+
+.player-text {
+    width: 50%;
+    justify-content: center;
+    color: white
+}
+
+.card {
+    width: 80px;
+    height: 120px;
+    display: inline;
+    margin: 0.3rem;
+}
+
+.player-cards {
+    opacity: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.button {
+    width: 64px;
+    height: 32px;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.p-moves {
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.checkbtn {
+
+    background-color: rgb(49, 88, 43);
+}
+
+.raisebtn {
+    background-color: rgb(173, 193, 39);
+}
+
+.foldbtn {
+    background-color: rgb(160, 24, 7);
+}
+
+.situptbn {
+    background-color: yellowgreen;
+    width: 10rem;
+    height: 7rem;
+}
+
+.gameInfo {
+    text-align: right;
+    color: white;
+    height: auto;
+    font-size: small;
+}
+
+.top-player {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.table-cards {
+
+    /*background-color: rgba(0, 0, 0, 0.505);*/
+    width: 30rem;
+    height: 8rem;
+    font-size: small;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+.situp {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.situpbtn {
+    background-color: yellow;
+}
+
+.center {
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}

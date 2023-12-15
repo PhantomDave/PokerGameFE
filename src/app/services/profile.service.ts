@@ -15,7 +15,14 @@ export class ProfileService implements OnInit {
     Email: '',
     LoggedIn: false,
     Token: '',
+    Hand: [],
+    CurrentRole: 0,
+    Move: 0,
   };
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
 
   ngOnInit() {
     if (localStorage.getItem('token') != undefined) {
@@ -33,6 +40,7 @@ export class ProfileService implements OnInit {
   }
 
   updateLocalStorage() {
+    console.table(this.profile);
     localStorage.setItem('profile', JSON.stringify(this.profile));
   }
 

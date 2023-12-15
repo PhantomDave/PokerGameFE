@@ -4,6 +4,7 @@ import { GameApiService } from '../services/gameapi.service';
 import { CryptoService } from '../services/crypto.service';
 import { ProfileService } from '../services/profile.service';
 import { Router } from '@angular/router';
+import { ILogin } from '../interface/ilogin';
 
 @Component({
   selector: 'app-login',
@@ -24,26 +25,27 @@ export class LoginComponent {
   ) {}
 
   async onSubmit(loginForm: NgForm) {
-    const password = await this.hashService.hashString(this.password);
+    const password = this.password;
+    
+    //hasing disabled for security reasons
+    //await this.hashService.hashString(this.password);
 
     this.gameApi.getUserNonce(this.email).subscribe({
       next: (nonce: string) => {
         this.gameApi.loginUser(this.email, nonce + password).subscribe({
-          next: (profile) => {
-            console.table(profile);
-            this.profileService.setName(profile.duser);
-            this.profileService.setEmail(profile.demail);
+          next: (profile: ILogin) => {
+            this.profileService.setName(profile.duser.username);
+            this.profileService.setEmail(profile.duser.email);
             this.profileService.setToken(profile.dtoken);
             this.profileService.profile.LoggedIn = true;
             this.profileService.updateLocalStorage();
-            this.router.navigateByUrl('/game/setup');
+            this.router.navigateByUrl('/dashboard');
           },
           error: (err) => console.error(err),
           complete: () => console.log('Auth done'),
         });
       },
       error: (err) => console.log("ERRORE NELL'AUTENTICAZIONE " + err),
-      complete: () => console.log('Auth Completed'),
     });
   }
 }

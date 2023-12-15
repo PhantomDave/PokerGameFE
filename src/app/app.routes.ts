@@ -3,6 +3,8 @@ import { LoginComponent } from './login/login.component';
 import { tokenGuard } from './token-guard.guard';
 import { SetupComponent } from './game/setup/setup.component';
 import { PlayComponent } from './game/play/play.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 export const routes: Routes = [
   {
@@ -22,5 +24,15 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
+  },
+  {
+    path: 'dashboard',
+    canActivate: [tokenGuard],
+    component: DashboardComponent,
+  },
+  {
+    path: 'leaderboard',
+    canActivate: [tokenGuard],
+    component: LeaderboardComponent,
   },
 ];

@@ -1,0 +1,20 @@
+<div class="d-flex h-100 bg-blur justify-content-center align-items-center">
+    <table class="poker-table w-50">
+        <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Chips Won</th>
+                <th scope="col">Players Knocked Out</th>
+                <th scope="col">Tables Won</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let score of scoreboard$ | async">
+                <th scope="row">{{score.Email}}</th>
+                <td>{{score.ChipsWon}}</td>
+                <td>{{score.PlayersKnockedOut}}</td>
+                <td>{{score.TablesWon}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

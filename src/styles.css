@@ -14,10 +14,11 @@ body {
 }
 
 
-.center-form {
-  padding: 3%;
+.poker-form {
   opacity: 80%;
   border-color: darkgray;
   border-radius: 2rem;
   border-style: solid;
+  padding: 1rem;
+  margin: auto;
 }
