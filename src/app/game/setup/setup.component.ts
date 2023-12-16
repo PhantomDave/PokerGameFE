@@ -14,10 +14,6 @@ import { Subscription } from 'rxjs/internal/Subscription';
   imports: [FormsModule, PlayComponent],
 })
 export class SetupComponent implements OnInit {
-  chips: number = 0;
-  players: number = 0;
-  bigblind: number = 0;
-  smallblind: number = 0;
   needsSetup: boolean = true;
   gameEvent!: IGame;
   resumeGameObj: IGame | null;
@@ -68,14 +64,16 @@ export class SetupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.api
-      .setupGame(this.players, this.smallblind, this.bigblind, this.chips)
-      .subscribe({
-        next: (resp) => {
-          this.gameEvent = resp;
-          this.needsSetup = false;
-        },
-        error: (error) => console.log(error),
-      });
+    const players = form.value.players;
+    const smallblind = form.value.smallblind;
+    const bigblind = form.value.bigblind;
+    const chips = form.value.chips;
+    this.api.setupGame(players, smallblind, bigblind, chips).subscribe({
+      next: (resp) => {
+        this.gameEvent = resp;
+        this.needsSetup = false;
+      },
+      error: (error) => console.log(error),
+    });
   }
 }

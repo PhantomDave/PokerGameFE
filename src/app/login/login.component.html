@@ -2,14 +2,15 @@
   <form #loginForm="ngForm" class="poker-primary poker-form login-form" (submit)="onSubmit(loginForm)">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input [(ngModel)]="email" name="email" type="email" class="form-control" ngModel id="exampleInputEmail1"
-        aria-describedby="emailHelp">
+      <input name="email" #email="ngModel" type="email" class="form-control" ngModel id="exampleInputEmail1"
+        aria-describedby="emailHelp" required>
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input [(ngModel)]="password" name="password" type="password" class="form-control" ngModel
-        id="exampleInputPassword1">
+      <input #password="ngModel" name="password" type="password" class="form-control" ngModel
+        id="exampleInputPassword1" required>
     </div>
-    <button type="submit" class="btn btn-light">Submit</button>
+    <div *ngIf="invalidCredentials" class="alert alert-danger">Invalid Credentials</div>
+    <button type="submit" class="btn btn-light" [disabled]="!loginForm.form.valid"> Submit</button>
   </form>
 </div>

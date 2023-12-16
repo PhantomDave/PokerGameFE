@@ -1,15 +1,17 @@
 <div class="d-flex h-100 bg-blur justify-content-center align-items-center">
-    <table class="poker-table w-50">
+    <table class="poker-table table table-success table-sm w-50">
         <thead>
-            <tr>
+            <tr class="table-success">
+                <th scope="col">Position</th>
                 <th scope="col">Email</th>
                 <th scope="col">Chips Won</th>
                 <th scope="col">Players Knocked Out</th>
                 <th scope="col">Tables Won</th>
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="let score of scoreboard$ | async">
+        <tbody class="table-success">
+            <tr class="table-success" *ngFor="let score of scoreboard$ | async; let i = index;">
+                <th scope="row">{{i+1}} <fa-icon *ngIf="i < 3" [icon]="faMedal"></fa-icon> </th>
                 <th scope="row">{{score.Email}}</th>
                 <td>{{score.ChipsWon}}</td>
                 <td>{{score.PlayersKnockedOut}}</td>

@@ -5,17 +5,17 @@ import { CryptoService } from '../services/crypto.service';
 import { ProfileService } from '../services/profile.service';
 import { Router } from '@angular/router';
 import { ILogin } from '../interface/ilogin';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  invalidCredentials: boolean = false;
 
   constructor(
     private gameApi: GameApiService,
@@ -25,14 +25,15 @@ export class LoginComponent {
   ) {}
 
   async onSubmit(loginForm: NgForm) {
-    const password = this.password;
-    
+    const email = loginForm.value.email;
+    const password = loginForm.value.password;
+
     //hasing disabled for security reasons
     //await this.hashService.hashString(this.password);
 
-    this.gameApi.getUserNonce(this.email).subscribe({
+    this.gameApi.getUserNonce(email).subscribe({
       next: (nonce: string) => {
-        this.gameApi.loginUser(this.email, nonce + password).subscribe({
+        this.gameApi.loginUser(email, nonce + password).subscribe({
           next: (profile: ILogin) => {
             this.profileService.setName(profile.duser.username);
             this.profileService.setEmail(profile.duser.email);
@@ -45,7 +46,10 @@ export class LoginComponent {
           complete: () => console.log('Auth done'),
         });
       },
-      error: (err) => console.log("ERRORE NELL'AUTENTICAZIONE " + err),
+      error: (err) => {
+        this.invalidCredentials = true;
+        setTimeout(() => (this.invalidCredentials = false), 5000);
+      },
     });
   }
 }
