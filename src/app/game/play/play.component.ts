@@ -22,7 +22,6 @@ import { IOpponent } from '../../interface/iopponent';
 })
 export class PlayComponent implements OnInit {
   @Input() game!: IGame;
-  isPlayerTurnVal: boolean = true;
   raiseAmount: number = 0;
   turnOf: IProfile | IOpponent | undefined;
   currentMessage: any = null;
@@ -42,11 +41,10 @@ export class PlayComponent implements OnInit {
     this.Suits.set(4, 'Clubs');
 
     this.getTurnOfNextPlayer(true);
-    this.moveLogic();
   }
 
   getCardSrc(card: ICard) {
-    return `../assets/cards/card${this.Suits.get(card.suit)}${card.value}.png`;
+    return `../assets/cards/card${this.Suits.get(card.Suit)}${card.Value}.png`;
   }
 
   sitUp() {
@@ -108,7 +106,6 @@ export class PlayComponent implements OnInit {
       complete: () => {
         this.game.Player.Move = move;
         this.getTurnOfNextPlayer();
-        this.moveLogic();
       },
     });
   }
@@ -160,9 +157,15 @@ export class PlayComponent implements OnInit {
               console.error(e);
             },
           });
+          this.router.navigateByUrl('/dashboard');
+          this.currentMessage = null;
         }
+        break;
+      }
+      case 'endlost': {
         this.router.navigateByUrl('/dashboard');
         this.currentMessage = null;
+        break;
       }
     }
   }
@@ -186,11 +189,9 @@ export class PlayComponent implements OnInit {
     } else {
       this.currentMessage = {
         message: `The Game was lost`,
-        action: 'end',
+        action: 'endlost',
         classes: 'center alert alert-success',
-        buttonOk: 'Add To Leaderboard',
-        buttonOkClasses: 'm-1 btn btn-success',
-        buttonNotOk: 'Go back without saving',
+        buttonNotOk: 'Go back',
         buttonNotOkClasses: 'm-1 btn btn-success',
       };
     }
@@ -202,24 +203,27 @@ export class PlayComponent implements OnInit {
       const idx = this.game.Opponents.findIndex(
         (o) => o.Name == this.turnOf?.Name,
       );
-      if (idx == this.game.Opponents.length) this.turnOf = this.game.Player;
+
+      if (idx == this.game.Opponents.length - 1) this.turnOf = this.game.Player;
       else this.turnOf = this.game.Opponents[idx + 1];
     }
     if (first) this.turnStart = this.turnOf;
+    this.moveLogic();
   }
 
   moveLogic() {
-    console.log(
-      `CanPlayerMove: ${this.CanPlayerMove(
-        this.turnOf!,
-      )} ${this.isPlayerTurn()}`,
-    );
-    if (this.game.Player.Chips <= 0) this.handleGameEnd(false);
-    if (!this.CanPlayerMove(this.turnOf!)) this.getTurnOfNextPlayer();
+    if (this.turnOf === undefined) this.turnOf = this.turnStart;
+    if (!this.CanPlayerMove(this.turnOf!) && !this.playerMoved(this.turnOf!))
+      this.getTurnOfNextPlayer();
     if (!this.isPlayerTurn()) {
       this.getAiMove();
+      return;
     }
     this.checkGameAdvance();
+  }
+
+  playerMoved(p: IProfile | IOpponent): boolean {
+    return p.Move != 0;
   }
 
   CanPlayerMove(p: IProfile | IOpponent): boolean {
@@ -233,15 +237,14 @@ export class PlayComponent implements OnInit {
     }
     if (!this.CanPlayerMove(this.turnOf!)) {
       this.getTurnOfNextPlayer();
-      this.moveLogic();
       console.log(`Player index: ${this.turnOf} can't move, skipping ahead`);
+      return;
     }
     const idx = this.game.Opponents.findIndex(
       (p) => p.Name == this.turnOf?.Name,
     );
     if (idx == -1) {
       this.turnOf = this.game.Player;
-      this.moveLogic();
       return;
     }
     this.gameApi.getAiMove(idx + 1).subscribe({
@@ -251,7 +254,6 @@ export class PlayComponent implements OnInit {
       },
       complete: () => {
         this.getTurnOfNextPlayer();
-        this.moveLogic();
       },
     });
   }
@@ -274,21 +276,17 @@ export class PlayComponent implements OnInit {
         complete: () => {
           if (this.game.CurrentStage == 2) {
             this.getLastRoundWinner();
+            if (this.game.Player.Chips <= 0) this.handleGameEnd(true);
           }
-
-          this.moveLogic();
+          this.getTurnOfNextPlayer();
         },
       });
     }
   }
 
   AllPlayerMadeAMove(): boolean {
-    console.log('moved');
     if (this.game.Player.Move == 0) return false;
-    console.log('player moved');
     for (let i = 0; i < this.game.Opponents.length; i++) {
-      console.log('opponent moved');
-      console.table(this.game.Opponents[i]);
       if (this.game.Opponents[i].Move == 0) return false;
     }
     return true;
@@ -314,6 +312,7 @@ export class PlayComponent implements OnInit {
   }
 
   getHand(handValue: number) {
+    console.log(handValue);
     if (handValue > 100) return 'Royal Flush';
     else if (handValue > 80) return 'Straight Flush';
     else if (handValue > 65) return 'Poker';
@@ -325,17 +324,6 @@ export class PlayComponent implements OnInit {
   }
 
   /*
-
-
-
-
-
-
-
-
-
-
-    
   }
 
   getDealer(): IProfile | IOpponent | undefined {

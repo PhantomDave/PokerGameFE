@@ -66,6 +66,7 @@ export class GameApiService {
       email: email,
       password: noncedPassword,
     });
+    console.table(json);
     return this.api.post(this.gameEndpoint + '/login/', json);
   }
 
