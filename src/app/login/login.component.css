@@ -1,0 +1,32 @@
+.login-form {
+  width: 20rem;
+  height: 17rem;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+  border: 2px solid #1c3cf2;
+  /* green */
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid #a94442;
+  /* red */
+}
+
+.poker-104 {
+  background-color: rgba(255, 0, 0, 0.408);
+  border: solid 2px red;
+  border-radius: 10rem;
+  margin: auto;
+  text-align: center;
+  color: white;
+}
+
+.loginbtn {
+  position: relative;
+  width: 100%;
+  margin: auto;
+  padding: 0.5rem;
+
+}

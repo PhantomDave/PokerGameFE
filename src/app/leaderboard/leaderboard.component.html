@@ -1,0 +1,29 @@
+<div class="d-flex h-100 bg-blur justify-content-center align-items-center">
+    <div class="myContainer">
+        <div class="container">
+            <h2>Poker Leaderboard</h2>
+            <div *ngIf="scoreboard$ | async as scores; else loading;">
+                <ul class="responsive-table">
+                    <li class="table-header">
+                        <div class="col col-1">Position</div>
+                        <div class="col col-2">Email</div>
+                        <div class="col col-3">Chips Won</div>
+                        <div class="col col-4">Players Knocked Out</div>
+                    </li>
+                    <li class="table-row" *ngFor="let score of scores; let i = index;">
+                        <div class="col col-1" data-label="Position">
+                            <div *ngIf="i >= 3">{{i+1}}</div> <fa-icon *ngIf="i < 3" [icon]="faMedal"
+                                [ngClass]="getIconColor(i)"></fa-icon>
+                        </div>
+                        <div class="col col-2" data-label="Email">{{score.Email}}</div>
+                        <div class="col col-3" data-label="Chips Won">{{score.ChipsWon}}</div>
+                        <div class="col col-4" data-label="Player Knocked Out">{{score.PlayersKnockedOut}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

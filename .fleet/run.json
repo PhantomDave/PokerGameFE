@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "npm",
+      "name": "NG Serve",
+      "command": "run",
+      "scripts": "start",
+    },
+    
+  ]
+}

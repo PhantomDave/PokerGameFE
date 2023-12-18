@@ -1,0 +1,24 @@
+.resumeGame {
+    display: inline;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: white;
+}
+
+.resumeGamebtn {
+    background-color: rgb(30, 85, 140);
+    color: white;
+}
+
+.startNewGamebtn {
+    background-color: rgb(247, 59, 59);
+    color: white;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border: 2px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border: 2px solid #a94442; /* red */
+}

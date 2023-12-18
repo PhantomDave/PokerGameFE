@@ -1,0 +1,51 @@
+<div class="d-flex flex-column h-100 bg-blur">
+    <div *ngIf="!showRulesDiv" class="poker-primary d-flex flex-column poker-form shadow">
+        <button class="btn btnplay m-2" (click)="play()">Play</button>
+        <button class="btn btnleader m-2" (click)="leaderboard()">Show Leaderboard</button>
+        <button class="btn btnrules m-2" (click)="showRules()">Show Rules</button>
+    </div>
+
+    @if(showRulesDiv)
+    {
+    <div class="poker-primary d-flex flex-column poker-form shadow text-light">
+        <button class="closebtn"><fa-icon [icon]="faX" (click)="showRules()" clickable></fa-icon>
+        </button>
+        <h1>Texas Hold'em Rules</h1>
+
+        <ol>
+            <li><strong>Objective:</strong> The goal is to have the best hand at showdown or to make opponents fold.
+            </li>
+            <li><strong>Starting Hands:</strong> Each player is dealt two private cards (hole cards), and five community
+                cards
+                are dealt face up in the center.</li>
+            <li><strong>Betting Rounds:</strong> Four rounds – Preflop, Flop, Turn, and River. Players can check, bet,
+                raise, or
+                fold.</li>
+            <li><strong>Community Cards:</strong>
+                <ul>
+                    <li><strong>Flop:</strong> Three community cards are dealt.</li>
+                    <li><strong>Turn:</strong> A fourth community card is dealt.</li>
+                    <li><strong>River:</strong> The fifth and final community card is dealt.</li>
+                </ul>
+            </li>
+            <li><strong>Hand Rankings:</strong> Standard poker hand rankings apply.</li>
+            <li><strong>Betting Options:</strong>
+                <ul>
+                    <li><strong>Check:</strong> Pass the action to the next player.</li>
+                    <li><strong>Bet:</strong> Place a wager.</li>
+                    <li><strong>Raise:</strong> Increase the bet.</li>
+                    <li><strong>Fold:</strong> Discard the hand and forfeit the round.</li>
+                </ul>
+            </li>
+            <li><strong>Blinds and Antes:</strong> Players post blinds and, in some games, antes to initiate betting.
+            </li>
+            <li><strong>Showdown:</strong> If more than one player remains after the final betting round, there's a
+                showdown.
+                The best hand wins the pot.</li>
+            <li><strong>Winning the Pot:</strong> The player with the best hand or the last remaining player wins the
+                pot.</li>
+            <li><strong>Button and Rotation:</strong> The dealer button rotates clockwise after each hand.</li>
+        </ol>
+    </div>
+    }
+</div>

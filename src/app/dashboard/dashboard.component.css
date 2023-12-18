@@ -1,0 +1,32 @@
+.btnplay {
+    background-color: green;
+    border-color: black;
+    scale: 1.1;
+}
+
+.btnleader {
+    background-color: darkolivegreen;
+}
+
+.btn {
+    border: 2px;
+    border-style: solid;
+    border-radius: 1rem;
+    border-color: grey !important
+}
+
+.btnrules {
+    background-color: rgb(117, 174, 31);
+}
+
+.btn:hover {
+    scale: 1.2;
+}
+
+.closebtn {
+    background-color: transparent;
+    width: 2rem;
+    position: relative;
+    left: 95%;
+    border: none;
+}

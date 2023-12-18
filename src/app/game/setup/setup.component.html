@@ -1,0 +1,100 @@
+@if (needsSetup) {
+  <div class="d-flex h-100 bg-blur justify-content-center align-items-center">
+    <form
+      #setupForm="ngForm"
+      class="poker-primary poker-form setup-form"
+      (submit)="onSubmit(setupForm)"
+    >
+      <div class="mb-3">
+        <label for="inputPlayers" class="form-label">Number of Players</label>
+        <input
+          #players="ngModel"
+          name="players"
+          type="number"
+          min="2"
+          max="5"
+          [defaultValue]="2"
+          [placeholder]="2"
+          class="form-control"
+          ngModel
+          id="inputPlayers"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="smallblind" class="form-label">Small Blind</label>
+        <input
+          #smallblind="ngModel"
+          name="smallblind"
+          type="number"
+          min="10"
+          max="1000"
+          [placeholder]="10"
+          [defaultValue]="10"
+          class="form-control"
+          ngModel
+          id="smallblind"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="bigblind" class="form-label">Big Blind</label>
+        <input
+          #bigblind="ngModel"
+          name="bigblind"
+          type="number"
+          min="100"
+          max="5000"
+          [defaultValue]="100"
+          [placeholder]="100"
+          class="form-control"
+          ngModel
+          id="bigblind"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="chips" class="form-label">Chips</label>
+        <input
+          #chips="ngModel"
+          name="chips"
+          type="number"
+          [min]="setupForm.value.bigblind + 1000"
+          [defaultValue]="setupForm.value.bigblind + 1000"
+          [placeholder]="setupForm.value.bigblind + 1000"
+          class="form-control"
+          ngModel
+          id="chips"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-light"
+        [disabled]="!setupForm.form.valid"
+      >
+        Start
+      </button>
+    </form>
+  </div>
+} @else if (resumeGameObj != null && !needsSetup && !loading) {
+  <div class="d-flex h-100 bg-blur justify-content-center align-items-center">
+    <div class="poker-primary poker-form setup-form resumeGame">
+      <span>The Following game was found saved, do you want to resume it?</span
+      ><br />
+      <span>Pot: {{ resumeGameObj.Pot }}</span
+      ><br />
+      <span>AIPlayers: {{ resumeGameObj.Opponents.length - 1 }}</span
+      ><br />
+      <span>Chips: {{ resumeGameObj.Player.Chips }}</span
+      ><br />
+      <button class="m-1 btn resumeGamebtn" (click)="resumeGame()">
+        Resume
+      </button>
+      <button class="m-1 btn startNewGamebtn" (click)="startNewGame()">
+        New Game
+      </button>
+    </div>
+  </div>
+} @else if (resumeGameObj == null && !loading) {
+  <app-play [game]="gameEvent"></app-play>
+} @else if (loading) {
+  <app-loading></app-loading>
+}
