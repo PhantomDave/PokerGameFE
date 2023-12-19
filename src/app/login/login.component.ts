@@ -47,7 +47,10 @@ export class LoginComponent {
           error: (err) => {
             console.log('ERRORE: ', err);
             this.invalidCredentials = true;
-            setTimeout(() => (this.invalidCredentials = false), 5000);
+            setTimeout(() => {
+              this.invalidCredentials = false;
+              this.loading = false;
+            }, 5000);
           },
           complete: () => (this.loading = false),
         });

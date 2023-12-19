@@ -1,3 +1,3 @@
 export const environment = {
-  gameEndpoint: 'http://0.0.0.0:5052',
+  gameEndpoint: 'https://localhost:7217',
 };
