@@ -51,7 +51,7 @@ export class PlayComponent implements OnInit {
   sitUp() {
     this.gameApi.sitUp().subscribe({
       next: () => {
-        this.router.navigateByUrl('/game/setup');
+        this.router.navigateByUrl('/dashboard');
       },
       error: () => {
         this.currentMessage = {

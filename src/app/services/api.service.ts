@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class APIService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get<T>(url: string, options?: any) {
     return this.request<T>('GET', url, undefined, options);
@@ -68,6 +69,7 @@ export class APIService {
       catchError((err) => {
         if (err.status === 401) {
           localStorage.removeItem('token');
+          this.router.navigateByUrl('');
         }
         return throwError(() => err);
       }),
